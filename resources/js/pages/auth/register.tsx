@@ -16,16 +16,18 @@ type RegisterForm = {
     password: string;
     password_confirmation: string;
     contract_pricing_id: string;
+    accepted_terms: boolean;
 };
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm<Required<RegisterForm>>({
-        name: 'rafael',
-        last_name: 'pimenta',
-        email: 'rafael.pimenta.dev@gmail.com',
-        password: 'rafa_123',
-        password_confirmation: 'rafa_123',
-        contract_pricing_id: '4',
+        name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        contract_pricing_id: '',
+        accepted_terms: false,
     });
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -33,7 +35,7 @@ export default function Register() {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        console.log(data); // 👈👈👈 aqui
+        console.log(data);
         post(route('register'), {
             onFinish: () => reset('password', 'password_confirmation'),
         });
@@ -62,11 +64,10 @@ export default function Register() {
                                 <InputError message={errors.name} className="mt-2" />
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="last_name">Sobrenome</Label>
+                                <Label htmlFor="lastName">Sobrenome</Label>
                                 <Input
-                                    id="last_name"
+                                    id="lastName"
                                     placeholder="Silva"
-                                    name={'last_name'}
                                     value={data.last_name}
                                     onChange={(e) => setData('last_name', e.target.value)}
                                     required
@@ -146,7 +147,14 @@ export default function Register() {
                             </Select>
                         </div>
                         <div className="flex items-center space-x-2">
-                            <input id="terms" type="checkbox" className="rounded border-input" required />
+                            <input
+                                id="terms"
+                                type="checkbox"
+                                className="rounded border-input"
+                                required
+                                checked={data.accepted_terms}
+                                onChange={(e) => setData('accepted_terms', e.target.checked)}
+                            />
                             <Label htmlFor="terms" className="text-sm">
                                 Aceito os{' '}
                                 <TextLink href={'#'} className="text-primary hover:underline">
@@ -157,6 +165,7 @@ export default function Register() {
                                     política de privacidade
                                 </TextLink>
                             </Label>
+                            <InputError message={errors.accepted_terms} className="mt-2" />
                         </div>
                     </CardContent>
                     <CardFooter className="flex flex-col space-y-4">

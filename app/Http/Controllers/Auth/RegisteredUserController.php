@@ -27,6 +27,7 @@ class RegisteredUserController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'accepted_terms' => ['accepted', 'required'],
         ]);
 
         $user = User::create([
@@ -34,6 +35,8 @@ class RegisteredUserController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'accepted_terms' => $request->accepted_terms,
+            'accepted_terms_at' => now(),
         ]);
 
         event(new Registered($user));
