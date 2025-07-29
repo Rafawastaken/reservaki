@@ -32,7 +32,7 @@ export default function Footer() {
                         </div>
                     </div>
                 </div>
-                <div className="mt-8 border-t pt-8 text-center text-muted-foreground">© 2024 Reservaki. Todos os direitos reservados.</div>
+                <div className="mt-8 border-t pt-8 text-center text-muted-foreground">© 2025 Reservaki. Todos os direitos reservados.</div>
             </div>
         </footer>
     );

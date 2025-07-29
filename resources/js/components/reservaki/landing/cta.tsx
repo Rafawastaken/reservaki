@@ -18,7 +18,7 @@ export default function CTA() {
                         <Button
                             size="lg"
                             variant="ghost"
-                            className="border-primary-foreground/20 px-8 py-6 text-lg text-primary-foreground hover:bg-primary-foreground/10"
+                            className="border-1 border-primary-foreground/20 px-8 py-6 text-lg text-primary-foreground hover:bg-primary-foreground/10"
                         >
                             Falar com a Equipa
                         </Button>
