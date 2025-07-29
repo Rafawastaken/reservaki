@@ -1,6 +1,3 @@
-import { Head, useForm } from '@inertiajs/react';
-import { FormEventHandler, useState } from 'react';
-
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
@@ -8,11 +5,13 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Head, useForm } from '@inertiajs/react';
 import { Eye, EyeOff } from 'lucide-react';
+import { FormEventHandler, useState } from 'react';
 
 type RegisterForm = {
     name: string;
-    lastName: string;
+    last_name: string;
     email: string;
     password: string;
     password_confirmation: string;
@@ -21,12 +20,12 @@ type RegisterForm = {
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm<Required<RegisterForm>>({
-        name: '',
-        lastName: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-        contract_pricing_id: '',
+        name: 'rafael',
+        last_name: 'pimenta',
+        email: 'rafael.pimenta.dev@gmail.com',
+        password: 'rafa_123',
+        password_confirmation: 'rafa_123',
+        contract_pricing_id: '4',
     });
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -34,6 +33,7 @@ export default function Register() {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+        console.log(data); // 👈👈👈 aqui
         post(route('register'), {
             onFinish: () => reset('password', 'password_confirmation'),
         });
@@ -62,15 +62,16 @@ export default function Register() {
                                 <InputError message={errors.name} className="mt-2" />
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="lastName">Sobrenome</Label>
+                                <Label htmlFor="last_name">Sobrenome</Label>
                                 <Input
-                                    id="lastName"
+                                    id="last_name"
                                     placeholder="Silva"
-                                    value={data.lastName}
-                                    onChange={(e) => setData('lastName', e.target.value)}
+                                    name={'last_name'}
+                                    value={data.last_name}
+                                    onChange={(e) => setData('last_name', e.target.value)}
                                     required
                                 />
-                                <InputError message={errors.lastName} className="mt-2" />
+                                <InputError message={errors.last_name} className="mt-2" />
                             </div>
                         </div>
                         <div className="space-y-2">
@@ -129,13 +130,13 @@ export default function Register() {
                             </div>
                             <InputError message={errors.password_confirmation} />
                         </div>
-                        <div className="space-y-2">
+                        <div className="z-10 space-y-2">
                             <Label htmlFor="contractType">Tipo de Contrato</Label>
                             <Select required value={data.contract_pricing_id} onValueChange={(value) => setData('contract_pricing_id', value)}>
-                                <SelectTrigger>
+                                <SelectTrigger className={'z-10'}>
                                     <SelectValue placeholder="Selecione um plano" />
                                 </SelectTrigger>
-                                <SelectContent>
+                                <SelectContent className={'z'}>
                                     <SelectItem value="1">Trial - Grátis 7 dias</SelectItem>
                                     <SelectItem value="2">Basic - €9,99/mês</SelectItem>
                                     <SelectItem value="3">Basic - €99,90/ano</SelectItem>
@@ -143,17 +144,16 @@ export default function Register() {
                                     <SelectItem value="5">Premium - €199,90/ano</SelectItem>
                                 </SelectContent>
                             </Select>
-                            <InputError message={errors.contract_pricing_id} />
                         </div>
                         <div className="flex items-center space-x-2">
                             <input id="terms" type="checkbox" className="rounded border-input" required />
                             <Label htmlFor="terms" className="text-sm">
                                 Aceito os{' '}
-                                <TextLink href={route('#')} className="text-primary hover:underline">
+                                <TextLink href={'#'} className="text-primary hover:underline">
                                     termos de uso
                                 </TextLink>{' '}
                                 e{' '}
-                                <TextLink href={route('#')} className="text-primary hover:underline">
+                                <TextLink href={'#'} className="text-primary hover:underline">
                                     política de privacidade
                                 </TextLink>
                             </Label>
