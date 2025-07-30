@@ -1,4 +1,4 @@
-import { useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler, useState } from 'react';
 
 import TextLink from '@/components/text-link';
@@ -39,6 +39,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
     return (
         <AuthCustomLayout>
+            <Head title="Login" />
             <form onSubmit={submit} className={'flex flex-col gap-6'}>
                 <Card className="w-full border-none bg-white/40 shadow-md md:w-xl">
                     <CardHeader className="text-center">
