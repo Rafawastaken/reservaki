@@ -45,9 +45,9 @@ export default function Register() {
         <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary/20 via-background to-secondary/20 p-4">
             <Head title="Register" />
             <form className="flex flex-col gap-6" onSubmit={submit}>
-                <Card className="w-full max-w-md">
+                <Card className="w-full border-none bg-white/40 shadow-md md:w-xl">
                     <CardHeader className="text-center">
-                        <CardTitle className="text-2xl font-bold">Criar Conta</CardTitle>
+                        <CardTitle className="text-2xl font-bold text-primary">Criar Conta</CardTitle>
                         <CardDescription>Crie sua conta para começar a usar nossa plataforma</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
