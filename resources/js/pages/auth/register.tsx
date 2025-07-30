@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import AuthCustomLayout from '@/layouts/auth/auth-custom-layout';
 import { Head, useForm } from '@inertiajs/react';
 import { Eye, EyeOff } from 'lucide-react';
 import { FormEventHandler, useState } from 'react';
@@ -42,7 +43,7 @@ export default function Register() {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary/20 via-background to-secondary/20 p-4">
+        <AuthCustomLayout>
             <Head title="Register" />
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <Card className="w-full border-none bg-white/40 shadow-md md:w-xl">
@@ -181,6 +182,6 @@ export default function Register() {
                     </CardFooter>
                 </Card>
             </form>
-        </div>
+        </AuthCustomLayout>
     );
 }
