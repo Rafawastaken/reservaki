@@ -8,18 +8,18 @@ import { type PropsWithChildren } from 'react';
 
 const sidebarNavItems: NavItem[] = [
     {
-        title: 'Profile',
+        title: 'Perfil',
         href: '/settings/profile',
+        icon: null,
+    },
+    {
+        title: 'Contrato',
+        href: '/settings/contrato',
         icon: null,
     },
     {
         title: 'Password',
         href: '/settings/password',
-        icon: null,
-    },
-    {
-        title: 'Appearance',
-        href: '/settings/appearance',
         icon: null,
     },
 ];
@@ -59,8 +59,8 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
 
                 <Separator className="my-6 md:hidden" />
 
-                <div className="flex-1 md:max-w-2xl">
-                    <section className="max-w-xl space-y-12">{children}</section>
+                <div className="flex-1">
+                    <section className="space-y-12 px-12">{children}</section>
                 </div>
             </div>
         </div>

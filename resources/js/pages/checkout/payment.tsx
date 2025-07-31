@@ -29,7 +29,7 @@ export default function PaymentPage() {
     const handlePay = () => {
         setSubmitting(true);
         router.post(
-            route('checkout.pay', { contract: contract.id }),
+            route('contract.pay', { contract: contract.id }),
             {},
             {
                 onFinish: () => setSubmitting(false),

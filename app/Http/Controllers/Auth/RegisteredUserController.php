@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contract;
-use App\Models\ContractTypePricings;
+use App\Models\ContractTypePricing;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -42,7 +42,7 @@ class RegisteredUserController extends Controller
             'accepted_terms_at' => now(),
         ]);
 
-        $pricing = ContractTypePricings::findOrFail($request->contract_pricing_id);
+        $pricing = ContractTypePricing::findOrFail($request->contract_pricing_id);
 
         $contract = Contract::create([
             'user_id' => $user->id,
@@ -64,7 +64,7 @@ class RegisteredUserController extends Controller
             return redirect()->intended(route('dashboard', absolute: false));
         }
 
-        return redirect()->route('checkout.payment', ['contract' => $contract->id]);
+        return redirect()->route('contract.payment', ['contract' => $contract->id]);
     }
 
     /**

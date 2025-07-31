@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\ContractType;
-use App\Models\ContractTypePricings;
+use App\Models\ContractTypePricing;
 use Illuminate\Database\Seeder;
 
 class ContractTypePricingSeeder extends Seeder
@@ -14,7 +14,7 @@ class ContractTypePricingSeeder extends Seeder
         $basicId = ContractType::where('name', 'Basic')->first()->id;
         $premiumId = ContractType::where('name', 'Premium')->first()->id;
 
-        ContractTypePricings::insert([
+        ContractTypePricing::insert([
             // Trial (oculto da UI)
             [
                 'contract_type_id' => $trialId,

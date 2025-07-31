@@ -17,10 +17,10 @@ class EnsureContractIsActive
         if (
             $user &&
             $user->contracts()
-                ->where('is_active', true)
-                ->where('starts_at', '<=', now())
-                ->where('ends_at', '>=', now())
-                ->exists()
+            ->where('is_active', true)
+            ->where('starts_at', '<=', now())
+            ->where('ends_at', '>=', now())
+            ->exists()
         ) {
             return $next($request);
         }
@@ -32,7 +32,7 @@ class EnsureContractIsActive
 
         if ($pending) {
             return redirect()
-                ->route('checkout.payment', ['contract' => $pending->id]);
+                ->route('contract.payment', ['contract' => $pending->id]);
         }
 
         /* sem contrato algum (caso improvável) */

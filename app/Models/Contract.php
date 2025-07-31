@@ -16,4 +16,24 @@ class Contract extends Model
         'ends_at',
         'is_active',
     ];
+
+    protected $casts = [
+        'starts_at' => 'datetime',
+        'ends_at' => 'datetime',
+    ];
+
+    public function type()
+    {
+        return $this->belongsTo(ContractType::class, 'contract_type_id');
+    }
+
+    public function pricing()
+    {
+        return $this->belongsTo(
+            ContractTypePricing::class,
+            'contract_pricing_id'       //  ← guarda este campo ao criar o contrato
+        );
+    }
+
+    
 }
