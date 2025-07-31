@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Contract;
+use App\Models\ContractTypePricings;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -28,6 +30,7 @@ class RegisteredUserController extends Controller
             'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'accepted_terms' => ['accepted', 'required'],
+            'contract_pricing_id' => ['required'],
         ]);
 
         $user = User::create([
@@ -39,11 +42,29 @@ class RegisteredUserController extends Controller
             'accepted_terms_at' => now(),
         ]);
 
+        $pricing = ContractTypePricings::findOrFail($request->contract_pricing_id);
+
+        $contract = Contract::create([
+            'user_id' => $user->id,
+            'contract_type_id' => $pricing->contract_type_id,
+            'billing_period' => $pricing->billing_period,
+            'price_cents' => $pricing->price_cents,
+            'cycle_days' => $pricing->cycle_days,
+            'starts_at' => now(),
+            'ends_at' => now()->addDays($pricing->cycle_days),
+            'is_active' => $pricing->price_cents == 0, // Ativa só se for trial
+        ]);
+
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        if ($contract->is_active) {
+            Auth::login($user);
+            return redirect()->intended(route('dashboard', absolute: false));
+        }
+
+        return redirect()->route('checkout.payment', ['contract' => $contract->id]);
     }
 
     /**
