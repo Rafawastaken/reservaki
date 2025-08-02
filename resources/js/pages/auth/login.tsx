@@ -1,6 +1,7 @@
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler, useState } from 'react';
 
+import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -58,6 +59,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                 value={data.email}
                                 onChange={(e) => setData('email', e.target.value)}
                             />
+                            <InputError message={errors.email} className="mt-2" />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="password">Senha</Label>
@@ -80,6 +82,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                 >
                                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                 </Button>
+                                <InputError message={errors.password} className="mt-2" />
                             </div>
                         </div>
                         <div className="flex items-center justify-between">

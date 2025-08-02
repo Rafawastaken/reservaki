@@ -43,6 +43,13 @@ class User extends Authenticatable
         return $this->hasOne(Contract::class)->where('is_active', true);
     }
 
+    /* ➜ Relação com propriedades */
+    public function properties(): HasMany
+    {
+        return $this->hasMany(Property::class);
+    }
+
+
     protected function casts(): array
     {
         return [
