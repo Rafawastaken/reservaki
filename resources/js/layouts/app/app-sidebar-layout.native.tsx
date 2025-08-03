@@ -13,12 +13,10 @@ export default function AppSidebarLayout({
 }>) {
     return (
         <AppShell variant="sidebar">
+            <AppSidebar />
             <AppContent variant="sidebar" className="overflow-x-hidden">
                 <AppSidebarHeader breadcrumbs={breadcrumbs} />
-                <div className="container mt-4 flex items-start justify-center gap-4">
-                    <AppSidebar />
-                    <div className="flex-1">{children}</div>
-                </div>
+                {children}
             </AppContent>
         </AppShell>
     );
