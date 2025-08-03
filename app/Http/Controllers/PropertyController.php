@@ -12,7 +12,7 @@ class PropertyController extends Controller
     public function index(): Response
     {
         $properties = auth()->user()->properties()->with(['features', 'images'])->get();
-        return Inertia::render('property/index', ["properties" => $properties]);
+        return Inertia::render('properties/index', ["properties" => $properties]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -52,6 +52,6 @@ class PropertyController extends Controller
 
     public function create(): Response
     {
-        return Inertia::render('property/create');
+        return Inertia::render('properties/create');
     }
 }

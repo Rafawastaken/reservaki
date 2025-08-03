@@ -17,7 +17,7 @@ export default function AppSidebarLayout({
                 <AppSidebarHeader breadcrumbs={breadcrumbs} />
                 <div className="container mt-4 flex items-start justify-center gap-4">
                     <AppSidebar />
-                    <div className="flex-1">{children}</div>
+                    <div className="flex-1 space-y-6 pb-12">{children}</div>
                 </div>
             </AppContent>
         </AppShell>
