@@ -3,8 +3,9 @@ import PropertyCard from '@/components/reservaki/cards/property-card';
 import StatsCard from '@/components/reservaki/cards/stats-card';
 import { ActionHeader } from '@/components/reservaki/ui/custom-headers';
 import AppLayout from '@/layouts/app-layout';
-import type { BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import type { BreadcrumbItem, SharedData } from '@/types';
+import type { Property } from '@/types/property';
+import { Head, usePage } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -13,55 +14,13 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-// Define the PropertyStatus type
-type PropertyStatus = 'ativo' | 'inativo';
-
-const properties = [
-    {
-        id: '1',
-        name: 'Apartamento Vista Mar',
-        location: 'Foz do Douro, Porto',
-        status: 'ativo' as PropertyStatus,
-        price: 85,
-        maxGuests: 4,
-        rating: 4.8,
-        reviews: 24,
-        bookings: 8,
-        revenue: 680,
-        images: 12,
-        description: 'Apartamento moderno com vista deslumbrante sobre o mar',
-    },
-    {
-        id: '2',
-        name: 'Villa Moderna',
-        location: 'Cascais, Lisboa',
-        status: 'ativo' as PropertyStatus,
-        price: 120,
-        maxGuests: 6,
-        rating: 4.9,
-        reviews: 31,
-        bookings: 12,
-        revenue: 1440,
-        images: 18,
-        description: 'Villa contemporânea com piscina e jardim privado',
-    },
-    {
-        id: '3',
-        name: 'Casa Rústica',
-        location: 'Ílhavo, Aveiro',
-        status: 'inativo' as PropertyStatus,
-        price: 65,
-        maxGuests: 3,
-        rating: 4.7,
-        reviews: 18,
-        bookings: 5,
-        revenue: 325,
-        images: 8,
-        description: 'Casa tradicional no centro histórico',
-    },
-];
+interface PropertyPageProps extends SharedData {
+    properties: Property[];
+}
 
 export default function index() {
+    const { properties } = usePage<PropertyPageProps>().props;
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Minhas Propriedades" />
@@ -69,7 +28,7 @@ export default function index() {
                 title="Minhas Propriedades"
                 description="Gere as suas propriedades e mantenha as informações atualizadas"
                 buttonText="Adicionar Propriedade"
-                onButtonClick={() => console.log('Adicionar Propriedade')}
+                action={'properties.create'}
             />
             {/* Stats Cards */}
             <div className="grid gap-4 md:grid-cols-4">
@@ -81,9 +40,7 @@ export default function index() {
 
             {/* Properties List */}
             <div className="space-y-4">
-                {properties.map((property) => (
-                    <PropertyCard property={property} key={property.id} />
-                ))}
+                {properties.length > 0 && properties.map((property) => <PropertyCard property={property} key={property.id} />)}
             </div>
 
             <AddPropertyCta />

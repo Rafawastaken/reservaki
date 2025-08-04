@@ -29,7 +29,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export interface ContractPageProps extends SharedData {
+interface ContractPageProps extends SharedData {
     contract: ContractPayload;
 }
 
