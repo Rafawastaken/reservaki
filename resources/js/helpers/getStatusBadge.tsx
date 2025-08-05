@@ -1,14 +1,12 @@
-import { Badge } from 'lucide-react';
+// resources/js/helpers/getStatusBadge.tsx
+import { Badge } from '@/components/ui/badge';
 
-const getStatusBadge = (status: string) => {
-    switch (status) {
-        case 'ativo':
-            return <Badge className="border-success/20 bg-success/10 text-success">Ativo</Badge>;
-        case 'inativo':
-            return <Badge className="border-muted bg-muted/50 text-muted-foreground">Inativo</Badge>;
-        default:
-            return <Badge>{status}</Badge>;
-    }
+const getStatusBadge = (isVisible: boolean) => {
+    return isVisible ? (
+        <Badge className="border-success/20 bg-success/10 text-success">Ativo</Badge>
+    ) : (
+        <Badge className="border-muted bg-muted/50 text-muted-foreground">Inativo</Badge>
+    );
 };
 
 export default getStatusBadge;

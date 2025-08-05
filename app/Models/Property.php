@@ -9,6 +9,18 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Property extends Model
 {
+    protected $fillable = [
+        'name',
+        'address',
+        'postal_code',
+        'city',
+        'district',
+        'country',
+        'price_per_night',
+        'is_visible',
+        'description',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
