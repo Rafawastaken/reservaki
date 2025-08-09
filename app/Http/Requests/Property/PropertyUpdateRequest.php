@@ -4,7 +4,7 @@ namespace App\Http\Requests\Property;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PropertyCreateRequest extends FormRequest
+class PropertyUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,24 +22,22 @@ class PropertyCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'address' => ['required', 'string'],
-            'postal_code' => ['required', 'string'],
-            'city' => ['required', 'string'],
+            'name' => ['sometimes', 'string', 'max:255'],
+            'address' => ['sometimes', 'string'],
+            'postal_code' => ['sometimes', 'string'],
+            'city' => ['sometimes', 'string'],
             'district' => ['nullable', 'string'],
-            'country' => ['required', 'string'],
-            'price_per_night' => ['required', 'numeric', 'min:0'],
-            'is_visible' => ['required', 'boolean'],
+            'country' => ['sometimes', 'string'],
+            'price_per_night' => ['sometimes', 'numeric', 'min:0'],
+            'is_visible' => ['sometimes', 'boolean'],
             'description' => ['nullable', 'string'],
 
-            // Features
-            'features.bedrooms' => ['required', 'integer', 'min:0'],
-            'features.bathrooms' => ['required', 'integer', 'min:0'],
-            'features.max_guests' => ['required', 'integer', 'min:1'],
+            'features.bedrooms' => ['sometimes', 'integer', 'min:0'],
+            'features.bathrooms' => ['sometimes', 'integer', 'min:0'],
+            'features.max_guests' => ['sometimes', 'integer', 'min:1'],
             'features.area_m2' => ['nullable', 'integer', 'min:0'],
             'features.extras' => ['nullable', 'string'],
 
-            // Amenities (opcionais com sometimes)
             'has_kitchen' => ['sometimes', 'boolean'],
             'has_air_conditioning' => ['sometimes', 'boolean'],
             'has_heating' => ['sometimes', 'boolean'],
@@ -48,8 +46,15 @@ class PropertyCreateRequest extends FormRequest
             'has_pool' => ['sometimes', 'boolean'],
             'has_washing_machine' => ['sometimes', 'boolean'],
 
-            // Imagens
+            // imagens novas (opcional)
             'images.*' => ['image', 'mimes:jpg,jpeg,png', 'max:2048'],
+
+            // ids de imagens existentes a remover
+            'deleted_image_ids' => ['array'],
+            'deleted_image_ids.*' => ['integer'],
+
+            // capa (id de imagem existente OU null)
+            'cover_image_id' => ['nullable', 'integer'],
         ];
     }
 }

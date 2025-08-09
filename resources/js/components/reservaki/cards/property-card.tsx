@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import getStatusBadge from '@/helpers/getStatusBadge';
 import type { Property } from '@/types/property';
-import { router } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { Camera, Edit3, Euro, Eye, EyeOff, MapPin, Star, Trash2, Users } from 'lucide-react';
 
 interface PropertyCardProps {
@@ -19,6 +19,10 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         if (confirm('Tens a certeza que prentendes remover esta propriedade?')) {
             router.delete(`/properties/${id}`);
         }
+    }
+
+    function handleToggle(id: number) {
+        router.patch(`/properties/toggle/${id}`);
     }
 
     return (
@@ -76,14 +80,14 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                     <div className="space-y-2">
                         <Button variant="outline" size="sm" className="w-full">
                             <Edit3 className="mr-2 h-4 w-4" />
-                            Editar
+                            <Link href={route('properties.edit', { property: property.id })}>Editar</Link>
                         </Button>
                         <Button variant="outline" size="sm" className="w-full">
                             <Eye className="mr-2 h-4 w-4" />
                             Ver Pública
                         </Button>
                         <div className="flex space-x-2">
-                            <Button variant="outline" size="sm" className="flex-1">
+                            <Button variant="outline" size="sm" className="flex-1" onClick={() => handleToggle(property.id)}>
                                 {property.is_visible ? (
                                     <>
                                         <EyeOff className="mr-1 h-4 w-4" />
