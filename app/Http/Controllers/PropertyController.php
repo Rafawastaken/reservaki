@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Property\PropertyCreateRequest;
 use App\Models\Property;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\Request;
 
 class PropertyController extends Controller
 {
@@ -17,39 +17,9 @@ class PropertyController extends Controller
         return Inertia::render('properties/index', ["properties" => $properties]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(PropertyCreateRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            // Propriedade
-            'name' => ['required', 'string', 'max:255'],
-            'address' => ['required', 'string'],
-            'postal_code' => ['required', 'string'],
-            'city' => ['required', 'string'],
-            'district' => ['nullable', 'string'],
-            'country' => ['required', 'string'],
-            'price_per_night' => ['required', 'numeric', 'min:0'],
-            'is_visible' => ['required', 'boolean'],
-            'description' => ['nullable', 'string'],
-
-            // Features
-            'features.bedrooms' => ['required', 'integer', 'min:0'],
-            'features.bathrooms' => ['required', 'integer', 'min:0'],
-            'features.max_guests' => ['required', 'integer', 'min:1'],
-            'features.area_m2' => ['nullable', 'integer', 'min:0'],
-            'features.extras' => ['nullable', 'string'],
-
-            // Amenities (opcionais com sometimes)
-            'has_kitchen' => ['sometimes', 'boolean'],
-            'has_air_conditioning' => ['sometimes', 'boolean'],
-            'has_heating' => ['sometimes', 'boolean'],
-            'has_wifi' => ['sometimes', 'boolean'],
-            'has_parking' => ['sometimes', 'boolean'],
-            'has_pool' => ['sometimes', 'boolean'],
-            'has_washing_machine' => ['sometimes', 'boolean'],
-
-            // Imagens
-            'images.*' => ['image', 'mimes:jpg,jpeg,png', 'max:2048'],
-        ]);
+        $validated = $request->validated();
 
         // 1) Cria Propriedade, usando null coalescing para opcionais
         $property = auth()->user()->properties()->create([
@@ -104,7 +74,6 @@ class PropertyController extends Controller
     {
         // 1) Apaga os ficheiros do disco "public"
         foreach ($property->images as $image) {
-            // cada $image->path já é algo como "properties/XYZ.png"
             Storage::disk('public')->delete($image->path);
         }
 
@@ -116,7 +85,7 @@ class PropertyController extends Controller
         $property->delete();
 
         return to_route('properties.index')
-            ->with('success', 'Propriedade deletada com sucesso.');
+            ->with('success', 'Propriedade removida com sucesso.');
     }
 
 }
