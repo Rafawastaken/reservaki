@@ -7,5 +7,5 @@ Route::middleware(['auth', 'verified', 'contract.active'])->prefix('properties')
     Route::get('/', [PropertyController::class, 'index'])->name('index');
     Route::get('/create', [PropertyController::class, 'create'])->name('create');
     Route::post('/', [PropertyController::class, 'store'])->name('store');
-    // poderemos adicionar depois: edit, update, destroy
+    Route::delete('/{property}', [PropertyController::class, 'destroy'])->name('properties.destroy');
 });

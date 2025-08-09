@@ -1,3 +1,4 @@
+import AddPropertyCta from '@/components/reservaki/cards/add-property-cta';
 import PropertyCard from '@/components/reservaki/cards/property-card';
 import StatsCard from '@/components/reservaki/cards/stats-card';
 import { ActionHeader } from '@/components/reservaki/ui/custom-headers';
@@ -19,39 +20,31 @@ export default function Index() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Minhas Propriedades" />
-
             <ActionHeader
                 title="Minhas Propriedades"
                 description="Gere as suas propriedades e mantenha as informações atualizadas"
                 buttonText="Adicionar Propriedade"
                 onButtonClick={() => router.visit(route('properties.create'))}
             />
-
             {/* Stats Cards */}
             <div className="grid gap-4 md:grid-cols-4">
                 <StatsCard title="Total de Propriedades" value={properties.length.toString()} textColor="text-primary" />
-                <StatsCard
-                    title="Propriedades Ativas"
-                    value={properties.filter((p) => p.status === 'ativo').length.toString()}
-                    textColor="text-success"
-                />
+                <StatsCard title="Propriedades Ativas" value={properties.filter((p) => p.is_visible).length.toString()} textColor="text-success" />
                 <StatsCard
                     title="Propriedades Inativas"
-                    value={properties.filter((p) => p.status === 'inativo').length.toString()}
+                    value={properties.filter((p) => !p.is_visible).length.toString()}
                     textColor="text-destructive"
                 />
                 <StatsCard title="Avaliação Média" value="—" textColor="text-slate-800" />
             </div>
-
             {/* Lista de Propriedades */}
             <div className="space-y-4">
                 {properties.map((property) => (
                     <PropertyCard property={property} key={property.id} />
                 ))}
             </div>
-
             {/* CTA */}
-            {/*<AddPropertyCta onClick={() => router.visit(route('properties.create'))} />*/}
+            <AddPropertyCta onButtonClick={() => router.visit(route('properties.create'))} />
         </AppLayout>
     );
 }

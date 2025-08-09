@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import getStatusBadge from '@/helpers/getStatusBadge';
 import type { Property } from '@/types/property';
+import { router } from '@inertiajs/react';
 import { Camera, Edit3, Euro, Eye, EyeOff, MapPin, Star, Trash2, Users } from 'lucide-react';
 
 interface PropertyCardProps {
@@ -11,8 +12,14 @@ interface PropertyCardProps {
 
 export default function PropertyCard({ property }: PropertyCardProps) {
     // encontra a imagem de capa ou fallback para a primeira
-    const cover = property.images.find((img) => img.is_cover) ?? property.images[0];
-    console.log(property);
+    const cover = property.images.find((img) => img.is_cover);
+    console.log(cover);
+
+    function handleDelete(id: number) {
+        if (confirm('Tens a certeza que prentendes remover esta propriedade?')) {
+            router.delete(`/properties/${id}`);
+        }
+    }
 
     return (
         <Card className="p-6 transition-shadow hover:shadow-md">
@@ -89,7 +96,12 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                                     </>
                                 )}
                             </Button>
-                            <Button variant="outline" size="sm" className="flex-1 text-destructive hover:text-destructive">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="flex-1 text-destructive hover:text-destructive"
+                                onClick={() => handleDelete(property.id)}
+                            >
                                 <Trash2 className="h-4 w-4" />
                             </Button>
                         </div>

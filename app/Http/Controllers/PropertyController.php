@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Property;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
@@ -90,14 +92,31 @@ class PropertyController extends Controller
             }
         }
 
-        return redirect()
-            ->route('properties.index')
-            ->with('success', 'Propriedade criada com sucesso.');
+        return to_route('properties.index')->with('success', 'Propriedade criada com sucesso.');
     }
-
 
     public function create(): Response
     {
         return Inertia::render('properties/create');
     }
+
+    public function destroy(Property $property): RedirectResponse
+    {
+        // 1) Apaga os ficheiros do disco "public"
+        foreach ($property->images as $image) {
+            // cada $image->path já é algo como "properties/XYZ.png"
+            Storage::disk('public')->delete($image->path);
+        }
+
+        // 2) Apaga os registos em cascata
+        $property->images()->delete();
+        $property->features()->delete();
+
+        // 3) Apaga a propriedade
+        $property->delete();
+
+        return to_route('properties.index')
+            ->with('success', 'Propriedade deletada com sucesso.');
+    }
+
 }
