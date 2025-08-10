@@ -17,6 +17,8 @@ interface PropertyPageProps extends SharedData {
 export default function Index() {
     const { properties } = usePage<PropertyPageProps>().props;
 
+    console.log(properties);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Minhas Propriedades" />

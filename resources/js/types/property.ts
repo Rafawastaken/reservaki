@@ -25,6 +25,7 @@ export interface PropertyFeature {
 export interface Property {
     id: number;
     name: string;
+    slug: string;
     address: string;
     postal_code: string;
     city: string;

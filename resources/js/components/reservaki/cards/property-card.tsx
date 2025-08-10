@@ -84,7 +84,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                         </Button>
                         <Button variant="outline" size="sm" className="w-full">
                             <Eye className="mr-2 h-4 w-4" />
-                            Ver Pública
+                            <Link href={`${property.slug}`}>Ver Página</Link>
                         </Button>
                         <div className="flex space-x-2">
                             <Button variant="outline" size="sm" className="flex-1" onClick={() => handleToggle(property.id)}>
