@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Str;
 
 class PropertyController extends Controller
 {
@@ -158,8 +159,14 @@ class PropertyController extends Controller
             // se veio cover_image_id, marca-a; senão, se não houver nenhuma capa, define a de menor order
             if (array_key_exists('cover_image_id', $data)) {
                 $property->images()->update(['is_cover' => false]);
-                if ($data['cover_image_id']) {
-                    $property->images()->where('id', $data['cover_image_id'])->update(['is_cover' => true]);
+
+                $coverId = $data['cover_image_id'];
+                if (!empty($coverId)) {
+                    $property->images()->where('id', $coverId)->update(['is_cover' => true]);
+                } else {
+                    // fallback: primeira por ordem
+                    $first = $property->images()->orderBy('order')->first();
+                    if ($first) $first->update(['is_cover' => true]);
                 }
             } else {
                 if (!$property->images()->where('is_cover', true)->exists()) {
@@ -176,9 +183,19 @@ class PropertyController extends Controller
     {
         $validated = $request->validated();
 
+        $base = Str::slug($validated['name']);
+        $slug = $base;
+        $i = 1;
+
+        while (Property::query()->where('slug', '=', $slug)->exists()) {
+            $slug = $base . '-' . $i;
+            $i++;
+        }
+
         // 1) Cria Propriedade, usando null coalescing para opcionais
         $property = auth()->user()->properties()->create([
             'name' => $validated['name'],
+            'slug' => $slug,
             'address' => $validated['address'],
             'postal_code' => $validated['postal_code'],
             'city' => $validated['city'],

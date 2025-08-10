@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ContractTypeSeeder::class,
             ContractTypePricingSeeder::class,
+            PropertyDemoSeeder::class
         ]);
     }
 }
