@@ -4,11 +4,12 @@ import Footer from '@/components/reservaki/landing/footer';
 import Header from '@/components/reservaki/landing/header';
 import Hero from '@/components/reservaki/landing/hero';
 import Steps from '@/components/reservaki/landing/steps';
+import PublicLayout from '@/layouts/public-layout';
 import { Head } from '@inertiajs/react';
 
-export default function Welcome() {
+export default function Index() {
     return (
-        <div className="bg-gradient-subtle min-h-screen">
+        <PublicLayout>
             <Head title="Reservaki - Sistema de gerenciamento de alojamento local" />
             <Header />
             <Hero />
@@ -16,6 +17,6 @@ export default function Welcome() {
             <Steps />
             <CTA />
             <Footer />
-        </div>
+        </PublicLayout>
     );
 }

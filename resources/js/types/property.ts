@@ -44,3 +44,12 @@ export interface Property {
     features?: PropertyFeature;
     images: PropertyImage[];
 }
+
+export interface PropertyItem {
+    id: number;
+    slug: string;
+    name: string;
+    city: string;
+    price_per_night: number;
+    cover_url: string | null;
+}

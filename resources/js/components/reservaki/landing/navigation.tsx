@@ -31,7 +31,7 @@ export function Navigation({ className, isPublic = true }: NavigationProps) {
         return (
             <nav className={cn('flex items-center space-x-6', className)}>
                 <NavLink href="/">Início</NavLink>
-                <NavLink href="/explorar">Explorar</NavLink>
+                <NavLink href="/propriedades">Propriedades</NavLink>
                 <NavLink href="/como-funciona">Como Funciona</NavLink>
             </nav>
         );
